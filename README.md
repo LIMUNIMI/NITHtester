@@ -6,9 +6,11 @@ A tool for testing and debugging [NITH sensors](https://github.com/LIMUNIMI/NITH
 
 NITHtester is a GUI application designed to monitor and test [NITH sensors](https://github.com/LIMUNIMI/NITHsensors). NITHsensors is a collection of Open-Source Hardware sensor peripherals dedicated to accessibility, and in particular to Accessible Digital Musical Instruments design. NITHtester provides various tools to monitor the output of the sensors that comply with the NITH sensors standard. With NITHtester, you can easily visualize sensor data, check status codes, and identify any errors or issues.
 
+</br>
 <div align="center">
-  <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHtester/main/Readme_Images/NITHtester_GUI.png" alt="Screenshot of the application while testing and Head Tracker." width="1000px"/>
+  <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHtester/main/Readme_Images/NITHtester_GUI.png" alt="Screenshot of the application while testing and Head Tracker."/>
 </div>
+</br>
 
 ## Installation
 
