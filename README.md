@@ -1,6 +1,8 @@
 # NITHtester
 
-![NITHtester GUI](Readme_Images/NITHtester_GUI.png | width=400)
+<div align="center">
+  <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHtester/main/Readme_Files/NITHtester_GUI.png" alt="Screenshot of the application while testing and Head Tracker." width="400px"/>
+</div>
 
 A tool for testing and debugging [NITH sensors](https://github.com/LIMUNIMI/NITHsensors). 
 
