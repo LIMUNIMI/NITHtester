@@ -1,6 +1,6 @@
 # NITHtester
 
-
+![NITHtester GUI](Readme_Images/NITHtester_GUI.png | width=400)
 
 A tool for testing and debugging [NITH sensors](https://github.com/LIMUNIMI/NITHsensors). 
 
