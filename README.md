@@ -83,8 +83,8 @@ To contribute to the development of NITHtester, follow these steps:
 
 ## License
 
-This project is licensed under the [GNU GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html).
+This project is licensed under the [GNU GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Contact
 
-For any questions or feedback regarding NITHtester, feel free to reach out to the project maintainer at [your-email@example.com](mailto:your-email@example.com).
+For any questions or feedback regarding NITHtester, feel free to open an issue in this repository. You will find more informations on the developer and on NITHsensors on his [personal website](https://neeqstock.notion.site/).
