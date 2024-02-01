@@ -1,4 +1,5 @@
 ﻿using NITHdmis.NithSensors;
+using NITHdmis.Ports;
 using NITHtester.Elements;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -31,16 +32,8 @@ namespace NITHtester.Modules
 
         public static Statuses PauseStatus { get; set; } = Statuses.Connected_Playing;
 
-        public static int Port
-        {
-            get { return port; }
-            set
-            {
-                if (value < 1) port = 1;
-                else port = value;
-            }
-        }
-
         public static RenderingModule RenderingModule { get; set; }
+        public static USBportManager USBportManager { get; set; }
+        public static UDPportManager UDPportManager { get; set; }
     }
 }

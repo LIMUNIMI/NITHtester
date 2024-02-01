@@ -1,9 +1,11 @@
-﻿using NITHtester.Modules;
+﻿using NITHdmis.NithSensors;
+using NITHdmis.NithSensors.Wrappers.NithFaceCam;
+using NITHdmis.Ports;
 using NITHdmis.Template;
+using NITHtester.Behaviors;
+using NITHtester.Modules;
 using System;
 using System.Collections.Generic;
-using NITHdmis.NithSensors;
-using NITHtester.Behaviors;
 
 namespace NITHtester.Setups
 {
@@ -29,13 +31,25 @@ namespace NITHtester.Setups
             Rack.NithModule = new NithModule();
             Rack.DataManagerModule = new DataManagerModule();
 
+            // Make ports
+            Rack.USBportManager = new USBportManager();
+            Rack.USBportManager.Listeners.Add(Rack.NithModule);
+
+            Rack.UDPportManager = new UDPportManager(20100);
+            Rack.UDPportManager.Listeners.Add(Rack.NithModule);
+
             // Add disposables to list
             Disposables.Add(Rack.RenderingModule);
             Disposables.Add(Rack.NithModule);
+            Disposables.Add(Rack.USBportManager);
+            Disposables.Add(Rack.UDPportManager);
 
             // Make behaviors
             Rack.NithModule.SensorBehaviors.Add(new NBreadInput());
             Rack.NithModule.ErrorBehaviors.Add(new ErrorHandler(Rack.NithModule));
+
+            // Preprocessors
+            Rack.NithModule.Preprocessors.Add(new NithPreproccessor_FaceCam());
 
             // You will probably want to leave this at the end!
             Rack.RenderingModule.StartRendering();

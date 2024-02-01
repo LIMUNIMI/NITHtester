@@ -22,11 +22,11 @@ namespace NITHtester.Behaviors
             {
                 argumentStr += AddWhiteSpaces(val.Argument.ToString());
                 argumentStr += "v: ";
-                if (val.Type == NithDataTypes.OnlyValue)
+                if (val.Type == NithDataTypes.OnlyBase)
                 {
                     argumentStr += val.Base;
                 }
-                else if (val.Type == NithDataTypes.ValueAndMax)
+                else if (val.Type == NithDataTypes.BaseAndMax)
                 {
                     argumentStr += val.Base + " / " + val.Max + "\tp: " + val.Proportional.ToString("F2");
                 }

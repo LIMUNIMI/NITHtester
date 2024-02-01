@@ -72,7 +72,7 @@ namespace NITHtester.Elements
         {
             try
             {
-                if (UseProp && NithArgVal.Type == NithDataTypes.ValueAndMax)
+                if (UseProp && NithArgVal.Type == NithDataTypes.BaseAndMax)
                 {
                     PrbGauge.Value = NithArgVal.Proportional + Offset;
                 }

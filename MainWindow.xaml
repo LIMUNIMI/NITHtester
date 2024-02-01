@@ -14,18 +14,33 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Grid.Row="0" Grid.Column="0" Content="Sensor port:" HorizontalAlignment="Left" Style="{StaticResource EntryLabel}" />
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="30">
-                        <Button x:Name="btnSensorPortMinus" Content="-" Width="40" HorizontalAlignment="Left" Click="btnSensorPortMinus_Click" />
+                        <!-- Connection selector -->
+                        <StackPanel Orientation="Vertical" Margin="0,0,30,0">
+                            <RadioButton Name="rbtUSB" Content="USB" Foreground="White" IsChecked="True" Checked="rbtUSB_Checked"  GroupName="PortType"/>
+                            <RadioButton Name="rbtUDP" Content="UDP" Foreground="White" IsChecked="False" Checked="rbtUDP_Checked" GroupName="PortType"/>
+                        </StackPanel>
+                        <!-- USB port -->
+                        <Label Style="{StaticResource EntryLabel}" Width="70" Content="USB port:"/>
+                        <Button x:Name="btnUSBPortMinus" Content="-" Width="40" HorizontalAlignment="Left" Click="btnUSBPortMinus_Click" />
                         <Border Style="{StaticResource BlackBorder}" Width="40" Margin="5,0,5,0">
-                            <TextBlock Name="txtSensorPort" Style="{StaticResource WhiteText}" Width="40" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bold" />
+                            <TextBlock Name="txtUSBPort" Style="{StaticResource WhiteText}" Width="40" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bold" />
                         </Border>
-                        <Button x:Name="btnSensorPortPlus" Content="+" Width="40" HorizontalAlignment="Left" Click="btnSensorPortPlus_Click" />
-                        <Button x:Name="btnConnect" Content="Connect" Width="80" Margin="40,0,0,0" Click="btnConnect_Click" />
+                        <Button x:Name="btnUSBPortPlus" Content="+" Width="40" HorizontalAlignment="Left" Click="btnUSBPortPlus_Click" />
+                        <!-- UDP port -->
+                        <Label Style="{StaticResource EntryLabel}" Margin="20,0,0,0" Width="70" Content="UDP port:" Foreground="White"/>
+                        <Border Style="{StaticResource BlackBorder}" Width="50" Margin="5,0,5,0">
+                            <TextBlock x:Name="txtUDPPort" Text="  " Style="{StaticResource WhiteText}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bold" />
+                        </Border>
+                        <!-- Connect/Disconnect -->
+                        <Button x:Name="btnConnect" Content="Connect/Disconnect" Width="120" Margin="40,0,0,0" Click="btnConnect_Click" />
                         <Ellipse x:Name="indConnection" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Margin="10,0,0,0">
                             <Ellipse.Clip>
                                 <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
                             </Ellipse.Clip>
                         </Ellipse>
+                        <!-- Pause -->
                         <Button x:Name="btnPause" Content="Pause" Width="80" Margin="40,0,0,0" Click="btnPause_Click" />
+                        
                     </StackPanel>
                 </StackPanel>
 

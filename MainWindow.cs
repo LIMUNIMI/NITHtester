@@ -1,8 +1,8 @@
-﻿using NITHdmis.Template;
+﻿using NITHdmis.Ports;
+using NITHdmis.Template;
 using NITHtester.Elements;
 using NITHtester.Modules;
 using NITHtester.Setups;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,9 +23,28 @@ namespace NITHtester
 
         public List<ComboBox> GaugesList { get; set; }
 
+        private SupportedPortTypes PortType { get; set; } = SupportedPortTypes.USB;
+
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            Rack.NithModule.Connect(Rack.Port);
+            if (IsConnected())
+            {
+                DisconnectAll();
+            }
+            else
+            {
+                switch (PortType)
+                {
+                    case SupportedPortTypes.USB:
+                        Rack.USBportManager.Connect();
+                        break;
+
+                    case SupportedPortTypes.UDP:
+                        Rack.UDPportManager.Connect();
+                        break;
+                }
+            }
+
             UpdateIndicators();
         }
 
@@ -45,18 +64,24 @@ namespace NITHtester
             UpdateIndicators();
         }
 
-        private void btnSensorPortMinus_Click(object sender, RoutedEventArgs e)
+        private void btnUSBPortMinus_Click(object sender, RoutedEventArgs e)
         {
-            Rack.Port--;
-            Rack.NithModule.Disconnect();
+            DisconnectAll();
+            Rack.USBportManager.Port--;
             UpdateIndicators();
         }
 
-        private void btnSensorPortPlus_Click(object sender, RoutedEventArgs e)
+        private void btnUSBPortPlus_Click(object sender, RoutedEventArgs e)
         {
-            Rack.Port++;
-            Rack.NithModule.Disconnect();
+            DisconnectAll();
+            Rack.USBportManager.Port++;
             UpdateIndicators();
+        }
+
+        private void DisconnectAll()
+        {
+            Rack.USBportManager?.Disconnect();
+            Rack.UDPportManager?.Disconnect();
         }
 
         private void InitializeGauges()
@@ -77,26 +102,6 @@ namespace NITHtester
             };
         }
 
-        private void UpdateIndicators()
-        {
-            txtSensorPort.Text = Rack.Port.ToString();
-            indConnection.Fill = Rack.NithModule.IsConnectionOk ? Rack.YES_BRUSH : Rack.NO_BRUSH;
-            btnPause.Content = Rack.Paused ? "▶ Play" : "|| Pause";
-        }
-
-        /// <summary>
-        /// This method will be called when the window finished loading. A good moment to call a setup
-        /// </summary>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Setup = new DefaultSetup(this);
-            Setup.Setup();
-
-            InitializeGauges();
-            InitializeHeadTrackerPlotter();
-            UpdateIndicators();
-        }
-
         private void InitializeHeadTrackerPlotter()
         {
             Rack.HeadTrackerPlotter = new HeadTrackerPlotter(
@@ -111,6 +116,69 @@ namespace NITHtester
                 cbxHTargBind,
                 dotPitchYaw,
                 dotPitchRoll);
+        }
+
+        private bool IsConnected()
+        {
+            bool connected = false;
+
+            switch (PortType)
+            {
+                case SupportedPortTypes.USB:
+                    connected = Rack.USBportManager.IsConnected;
+                    break;
+
+                case SupportedPortTypes.UDP:
+                    connected = Rack.UDPportManager.IsConnected;
+                    break;
+            }
+
+            return connected;
+        }
+
+        private void rbtUDP_Checked(object sender, RoutedEventArgs e)
+        {
+            DisconnectAll();
+            PortType = SupportedPortTypes.UDP;
+        }
+
+        private void rbtUSB_Checked(object sender, RoutedEventArgs e)
+        {
+            DisconnectAll();
+            PortType = SupportedPortTypes.USB;
+        }
+
+        private void UpdateIndicators()
+        {
+            txtUSBPort.Text = Rack.USBportManager.Port.ToString();
+            txtUDPPort.Text = Rack.UDPportManager.Port.ToString();
+            switch (PortType)
+            {
+                case SupportedPortTypes.USB:
+                    indConnection.Fill = Rack.USBportManager.IsConnected ? Rack.YES_BRUSH : Rack.NO_BRUSH;
+                    break;
+
+                case SupportedPortTypes.UDP:
+                    indConnection.Fill = Rack.UDPportManager.IsConnected ? Rack.YES_BRUSH : Rack.NO_BRUSH;
+                    break;
+            }
+
+            btnPause.Content = Rack.Paused ? "▶ Play" : "|| Pause";
+        }
+
+        /// <summary>
+        /// This method will be called when the window finished loading. A good moment to call a setup
+        /// </summary>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Setup = new DefaultSetup(this);
+            Setup.Setup();
+
+            InitializeGauges();
+            InitializeHeadTrackerPlotter();
+            UpdateIndicators();
+
+            
         }
     }
 }

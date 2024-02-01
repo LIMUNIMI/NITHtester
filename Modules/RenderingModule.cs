@@ -46,7 +46,7 @@ namespace NITHtester.Modules
         /// </summary>
         private void DispatcherUpdate(object sender, EventArgs e)
         {
-            MainWindow.indConnection.Fill = Rack.NithModule.IsConnectionOk ? Rack.YES_BRUSH : Rack.NO_BRUSH;
+            // MainWindow.indConnection.Fill = Rack.USBportManager.IsConnected ? Rack.YES_BRUSH : Rack.NO_BRUSH;
             MainWindow.txtArgumentsValues.Text = Rack.DataManagerModule.ArgumentsString;
             MainWindow.txtSensorName.Text = Rack.DataManagerModule.SensorName;
             MainWindow.txtSensorVersion.Text = Rack.DataManagerModule.SensorVersion;
