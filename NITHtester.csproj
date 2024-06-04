@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Title>NITHtester</Title>
+    <PackageIcon>NithLogo_White_small.png</PackageIcon>
+    <ApplicationIcon>NithLogo_White.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MainWindow.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NithLogo_White.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NITHlibrary\NITHlibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NithLogo_White.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="NithLogo_White_small.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
