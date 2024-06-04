@@ -1,10 +1,10 @@
 # NITHtester
 
-A tool for testing and debugging [NITH sensors](https://github.com/LIMUNIMI/NITHsensors). 
+A GUI for testing NITH sensor peripherals and wrappers.
 
 ## Description
 
-NITHtester is a GUI application designed to monitor and test [NITH sensors](https://github.com/LIMUNIMI/NITHsensors). NITHsensors is a collection of Open-Source Hardware sensor peripherals dedicated to accessibility, and in particular to Accessible Digital Musical Instruments design. NITHtester provides various tools to monitor the output of the sensors that comply with the NITH sensors standard. With NITHtester, you can easily visualize sensor data, check status codes, and identify any errors or issues.
+NITHtester is a GUI application designed to monitor and test NITH sensor peripherals and wrappers. NITH is a collection of Open-Source solutions dedicated to accessibility for motor disabilities, with a focus on quadriplegic users. NITHtester provides various tools to monitor the output of the sensors that comply with the NITH standard. With NITHtester, you can easily visualize sensor data, check status codes, and identify any errors or issues.
 
 </br>
 <div align="center">
@@ -81,9 +81,11 @@ The source code for NITHtester is available in this repository. It is written in
 To contribute to the development of NITHtester, follow these steps:
 
 1. Clone this repository to your local machine.
-2. Clone the [NITHdmis repository](https://github.com/LIMUNIMI/NITHdmis) and place it in the same directory as the NITHtester folder. This is a library from which NITHsensor depends.
-3. Open the *NITHtester.sln* solution file with Visual Studio 2022.
+2. NITHtester depends on [NITHlibrary](https://github.com/LIMUNIMI/NITHlibrary). Clone it in an adjacent folder, so Visual Studio should be able to locate it automatically.
+3. Open the *NITHtester.sln* solution file with Visual Studio.
 4. Make your desired changes or additions to the code.
+
+Feel free to fork this repository!
 
 ## License
 
@@ -91,4 +93,4 @@ This project is licensed under the [GNU GPLv3 license](https://www.gnu.org/licen
 
 ## Contact
 
-For any questions or feedback regarding NITHtester, feel free to open an issue in this repository. You will find more informations on the developer and on NITHsensors on his [personal website](https://neeqstock.notion.site/).
+For any questions or feedback regarding NITHtester, feel free to open an issue in this repository. You will find more informations about NITH on Nicola Davanzo's [personal website](https://neeqstock.notion.site/).
