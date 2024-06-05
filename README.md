@@ -2,6 +2,10 @@
 
 _A GUI for testing NITH sensor peripherals and wrappers._
 
+<div align="center">
+  <img src="Readme_Images/NITHtester_GUI.png" alt="Screenshot of the application while testing and Head Tracker."/>
+</div>
+
 ## Description
 
 NITHtester is a GUI application designed to monitor and test NITH sensor peripherals and wrappers. NITH is a collection of Open-Source solutions dedicated to accessibility for motor disabilities, with a focus on quadriplegic users. NITHtester provides various tools to monitor the output of the sensors that comply with the NITH standard. With NITHtester, you can easily visualize sensor data, check status codes, and identify any errors or issues.
@@ -10,7 +14,7 @@ It is built in C# using .NET 8.
 
 </br>
 <div align="center">
-  <img src="Readme_Images/NITHtester_GUI.png" alt="Screenshot of the application while testing and Head Tracker."/>
+  <img src="NithLogo_White_Small.png" alt="Screenshot of the application while testing and Head Tracker."/>
 </div>
 </br>
 
