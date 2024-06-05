@@ -3,7 +3,7 @@
 _A GUI for testing NITH sensor peripherals and wrappers._
 
 <div align="center">
-  <img src="NithLogo_White_small.png" alt="NITH logo."/>
+  <img src="NithLogo_White_Trace.png" alt="NITH logo." width="150px"/>
 </div>
 
 ## Description
