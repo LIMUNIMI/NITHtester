@@ -79,9 +79,9 @@
 
                 <!-- Arguments -->
                 <DockPanel LastChildFill="True">
-                    <Label Style="{StaticResource EntryLabel}" Content="Arguments and values:" HorizontalAlignment="Left" />
+                    <Label Style="{StaticResource EntryLabel}" Content="Parameters and values:" HorizontalAlignment="Left" />
                     <Border Style="{StaticResource BlackBorder}">
-                        <TextBox Style="{StaticResource WhiteTextBlackBox}" Name="txtArgumentsValues" Height="300" HorizontalAlignment="Left" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
+                        <TextBox Style="{StaticResource WhiteTextBlackBox}" Name="txtParametersAndValues" Height="300" HorizontalAlignment="Left" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
                     </Border>
                 </DockPanel>
 

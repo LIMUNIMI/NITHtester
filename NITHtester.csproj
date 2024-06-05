@@ -9,6 +9,7 @@
     <Title>NITHtester</Title>
     <PackageIcon>NithLogo_White_small.png</PackageIcon>
     <ApplicationIcon>NithLogo_White.ico</ApplicationIcon>
+    <StartupObject>NITHtester.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
