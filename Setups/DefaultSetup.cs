@@ -32,7 +32,7 @@ namespace NITHtester.Setups
             Rack.UDPreceiver.Listeners.Add(Rack.NithModule);
 
             Rack.PortDetector = new NithUSBportDetector();
-            Rack.PortDetector.Behaviors.Add(new BNithUSBportDetector_ConnectToPort(Rack.USBreceiver));
+            Rack.PortDetector.Behaviors.Add(new BUSBreceiver_ConnectToPort(Rack.USBreceiver));
 
             // Add disposables to list
             Disposables.Add(Rack.RenderingModule);

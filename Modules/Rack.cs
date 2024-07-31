@@ -27,7 +27,7 @@ namespace NITHtester.Modules
         public static MappingModule MappingModule { get; set; }
         public static NithModule NithModule { get; set; }
 
-        public static List<NithArgumentValue> NithValues { get; set; }
+        public static List<NithParameterValue> NithValues { get; set; }
 
         public static bool Paused { get; set; } = false;
 

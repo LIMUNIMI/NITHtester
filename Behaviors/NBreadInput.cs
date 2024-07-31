@@ -17,9 +17,9 @@ namespace NITHtester.Behaviors
             Rack.DataManagerModule.ExtraData = nithData.ExtraData;
 
             argumentStr = "";
-            foreach (NithArgumentValue val in nithData.Values)
+            foreach (NithParameterValue val in nithData.Values)
             {
-                argumentStr += AddWhiteSpaces(val.Argument.ToString());
+                argumentStr += AddWhiteSpaces(val.Parameter.ToString());
                 argumentStr += "v: ";
                 if (val.Type == NithDataTypes.OnlyBase)
                 {
@@ -27,7 +27,7 @@ namespace NITHtester.Behaviors
                 }
                 else if (val.Type == NithDataTypes.BaseAndMax)
                 {
-                    argumentStr += val.Base + " / " + val.Max + "\tp: " + val.Proportional.ToString("F2");
+                    argumentStr += val.Base + " / " + val.Max + "\tn: " + val.Normalized.ToString("F2");
                 }
                 argumentStr += "\n";
             }

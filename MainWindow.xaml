@@ -16,19 +16,19 @@
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="30">
                         <!-- Connection selector -->
                         <StackPanel Orientation="Vertical" Margin="0,0,30,0">
-                            <RadioButton Name="rbtUSB" Content="USB" Foreground="White" IsChecked="True" Checked="rbtUSB_Checked"  GroupName="PortType"/>
-                            <RadioButton Name="rbtUDP" Content="UDP" Foreground="White" IsChecked="False" Checked="rbtUDP_Checked" GroupName="PortType"/>
+                            <RadioButton Name="rbtUSB" Content="USB" Foreground="White" IsChecked="True" Checked="rbtUSB_Checked"  GroupName="PortType" />
+                            <RadioButton Name="rbtUDP" Content="UDP" Foreground="White" IsChecked="False" Checked="rbtUDP_Checked" GroupName="PortType" />
                         </StackPanel>
                         <!-- USB port -->
-                        <Label Style="{StaticResource EntryLabel}" Width="70" Content="USB port:"/>
+                        <Label Style="{StaticResource EntryLabel}" Width="70" Content="USB port:" />
                         <Button x:Name="btnUSBPortMinus" Content="-" Width="40" HorizontalAlignment="Left" Click="btnUSBPortMinus_Click" />
                         <Border Style="{StaticResource BlackBorder}" Width="40" Margin="5,0,5,0">
                             <TextBlock Name="txtUSBPort" Style="{StaticResource WhiteText}" Width="40" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bold" />
                         </Border>
                         <Button x:Name="btnUSBPortPlus" Content="+" Width="40" HorizontalAlignment="Left" Click="btnUSBPortPlus_Click" />
-                        <Button Name="btnUSBPortScan" Content="Scan" Width="50" Margin="20,0,0,0" Click="btnUSBPortScan_Click"/>
+                        <Button Name="btnUSBPortScan" Content="Scan" Width="50" Margin="20,0,0,0" Click="btnUSBPortScan_Click" />
                         <!-- UDP port -->
-                        <Label Style="{StaticResource EntryLabel}" Margin="20,0,0,0" Width="70" Content="UDP port:" Foreground="White"/>
+                        <Label Style="{StaticResource EntryLabel}" Margin="20,0,0,0" Width="70" Content="UDP port:" Foreground="White" />
                         <Border Style="{StaticResource BlackBorder}" Width="50" Margin="5,0,5,0">
                             <TextBox x:Name="txtUDPPort" Text="  " Style="{StaticResource WhiteTextBlackBox}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bold" TextChanged="TxtUDPPort_OnTextChanged" />
                         </Border>
@@ -41,7 +41,6 @@
                         </Ellipse>
                         <!-- Pause -->
                         <Button x:Name="btnPause" Content="Pause" Width="80" Margin="40,0,0,0" Click="btnPause_Click" />
-                        
                     </StackPanel>
                 </StackPanel>
 
@@ -68,7 +67,7 @@
                         <TextBlock Style="{StaticResource WhiteText}" Name="txtStatusCode" HorizontalAlignment="Left" />
                     </Border>
                 </DockPanel>
-                
+
                 <!-- Extra Data -->
                 <DockPanel LastChildFill="True">
                     <Label Style="{StaticResource EntryLabel}" Content="Extra data (optional):" HorizontalAlignment="Left" />
@@ -117,6 +116,8 @@
                         <TextBox Name="txtOffGauge1" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                         <Label Style="{StaticResource EntryLabel}" Content="Prop.:" Width="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                         <CheckBox Name="chkProp1" VerticalAlignment="Center" Width="Auto" />
+                        <Label Style="{StaticResource EntryLabel}" Content="Filter Alpha:" Width="70" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+                        <TextBox Name="txtFilterAlpha1" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                     </StackPanel>
                     <!-- Gauge 2 -->
                     <StackPanel Orientation="Horizontal">
@@ -132,6 +133,8 @@
                         <TextBox Name="txtOffGauge2" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                         <Label Style="{StaticResource EntryLabel}" Content="Prop.:" Width="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                         <CheckBox Name="chkProp2" VerticalAlignment="Center" Width="Auto" />
+                        <Label Style="{StaticResource EntryLabel}" Content="Filter Alpha:" Width="70" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+                        <TextBox Name="txtFilterAlpha2" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                     </StackPanel>
                     <!-- Gauge 3 -->
                     <StackPanel Orientation="Horizontal">
@@ -147,6 +150,8 @@
                         <TextBox Name="txtOffGauge3" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                         <Label Style="{StaticResource EntryLabel}" Content="Prop.:" Width="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                         <CheckBox Name="chkProp3" VerticalAlignment="Center" Width="Auto" />
+                        <Label Style="{StaticResource EntryLabel}" Content="Filter Alpha:" Width="70" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+                        <TextBox Name="txtFilterAlpha3" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                     </StackPanel>
                     <!-- Gauge 4 -->
                     <StackPanel Orientation="Horizontal">
@@ -162,6 +167,8 @@
                         <TextBox Name="txtOffGauge4" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                         <Label Style="{StaticResource EntryLabel}" Content="Prop.:" Width="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                         <CheckBox Name="chkProp4" VerticalAlignment="Center" Width="Auto" />
+                        <Label Style="{StaticResource EntryLabel}" Content="Filter Alpha:" Width="70" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+                        <TextBox Name="txtFilterAlpha4" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                     </StackPanel>
                     <!-- Gauge 5 -->
                     <StackPanel Orientation="Horizontal">
@@ -177,6 +184,8 @@
                         <TextBox Name="txtOffGauge5" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                         <Label Style="{StaticResource EntryLabel}" Content="Prop.:" Width="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                         <CheckBox Name="chkProp5" VerticalAlignment="Center" Width="Auto" />
+                        <Label Style="{StaticResource EntryLabel}" Content="Filter Alpha:" Width="70" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+                        <TextBox Name="txtFilterAlpha5" Style="{StaticResource WhiteTextBlackBox}" Width="50" />
                     </StackPanel>
                 </StackPanel>
 
@@ -195,8 +204,8 @@
                         </StackPanel>
                         <!-- Argument bind -->
                         <StackPanel Orientation="Horizontal">
-                            <Label Style="{StaticResource EntryLabel}" Content="Argument bind:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
-                        <ComboBox Name="cbxHTargBind" Width="100" />
+                            <Label Style="{StaticResource EntryLabel}" Content="Parameter bind:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
+                            <ComboBox Name="cbxHTargBind" Width="100" />
                         </StackPanel>
                         <!-- Yaw multiplier -->
                         <StackPanel Orientation="Horizontal">
@@ -218,19 +227,23 @@
                             <Label Style="{StaticResource EntryLabel}" Content="Calibrate:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
                             <Button Name="btnHTcalibrate" Content="Set Center" Width="100" />
                         </StackPanel>
-                        <Label Height="50"/>
+                        <!-- Filter -->
+                        <StackPanel Orientation="Horizontal">
+                            <Label Style="{StaticResource EntryLabel}" Content="Filter alpha:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
+                            <TextBox Name="txtHTfilterAlpha" Style="{StaticResource WhiteTextBlackBox}" Width="100" />
+                        </StackPanel>
                         <!-- Raw position -->
                         <StackPanel Orientation="Horizontal">
                             <Label Style="{StaticResource EntryLabel}" Content="Raw Pos.:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
                             <Border Style="{StaticResource BlackBorder}">
-                                <TextBlock Style="{StaticResource WhiteText}" Name="txtHTrawPosition" Height="Auto" Width="100" HorizontalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" Text="Y:&#10;P:&#10;R:"/>
+                                <TextBlock Style="{StaticResource WhiteText}" Name="txtHTrawPosition" Height="Auto" Width="100" HorizontalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" Text="Y:&#10;P:&#10;R:" />
                             </Border>
                         </StackPanel>
                         <!-- Raw acceleration -->
                         <StackPanel Orientation="Horizontal">
                             <Label Style="{StaticResource EntryLabel}" Content="Raw Accel.:" Width="100" Margin="10,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" />
                             <Border Style="{StaticResource BlackBorder}">
-                                <TextBlock Style="{StaticResource WhiteText}" Name="txtHTrawAccel" Height="Auto" Width="100" HorizontalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" Text="Y:&#10;P:&#10;R:"/>
+                                <TextBlock Style="{StaticResource WhiteText}" Name="txtHTrawAccel" Height="Auto" Width="100" HorizontalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" Text="Y:&#10;P:&#10;R:" />
                             </Border>
                         </StackPanel>
                     </StackPanel>
@@ -243,7 +256,6 @@
                         <TextBlock Style="{StaticResource WhiteText}" Name="txtTestPanel" HorizontalAlignment="Left" />
                     </Border>
                 </DockPanel>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>

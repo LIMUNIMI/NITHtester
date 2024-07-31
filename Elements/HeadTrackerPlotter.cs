@@ -1,4 +1,5 @@
 ﻿using NITHlibrary.Nith.Internals;
+using NITHlibrary.Tools.Filters.ValueFilters;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,36 +9,41 @@ namespace NITHtester.Elements
 {
     internal class HeadTrackerPlotter
     {
-        private const int DEFAULT_RADIUS = 180;
-        private Button btnCalibrate;
-        private ComboBox cbxMode;
-        private CheckBox chkEnabled;
-        private Canvas cnvPlot;
-        private Ellipse dotPR;
-        private Ellipse dotPY;
-        private HeadtrackerCenteringHelper HTcenteringHelper;
-        private TextBlock txtHTrawAccel;
-        private TextBlock txtHTrawPosition;
-        private TextBox txtPitchMultiplier;
-        private TextBox txtRollMultiplier;
-        private TextBox txtYawMultiplier;
-        private HTvisualizationModes visualizationMode = HTvisualizationModes.Position;
+        private const int DefaultRadius = 180;
+        private Button _btnCalibrate;
+        private readonly ComboBox _cbxMode;
+        private CheckBox _chkEnabled;
+        private readonly Canvas _cnvPlot;
+        private readonly Ellipse _dotPr;
+        private readonly Ellipse _dotPy;
+        private readonly HeadtrackerCenteringHelper _hTcenteringHelper;
+        private readonly TextBlock _txtHTrawAccel;
+        private readonly TextBlock _txtHTrawPosition;
+        private readonly TextBox _txtPitchMultiplier;
+        private readonly TextBox _txtRollMultiplier;
+        private readonly TextBox _txtYawMultiplier;
+        private HTvisualizationModes _visualizationMode = HTvisualizationModes.Position;
+        private TextBox _txtFilterAlpha;
+        private DoubleFilterMAexpDecaying yawFilter = new(1);
+        private DoubleFilterMAexpDecaying pitchFilter = new(1);
+        private DoubleFilterMAexpDecaying rollFilter = new(1);
 
-        public HeadTrackerPlotter(Canvas cnvPlot, CheckBox chkEnabled, TextBox txtYawMultiplier, TextBox txtPitchMultiplier, TextBox txtRollMultiplier, Button btnCalibrate, TextBlock txtHTrawPosition, TextBlock txtHTrawAccel, ComboBox cbxMode, Ellipse dotPY, Ellipse dotPR)
+        public HeadTrackerPlotter(Canvas cnvPlot, CheckBox chkEnabled, TextBox txtYawMultiplier, TextBox txtPitchMultiplier, TextBox txtRollMultiplier, Button btnCalibrate, TextBlock txtHTrawPosition, TextBlock txtHTrawAccel, ComboBox cbxMode, Ellipse dotPy, Ellipse dotPr, TextBox txtFilterAlpha)
         {
-            this.cnvPlot = cnvPlot;
-            this.chkEnabled = chkEnabled;
-            this.txtYawMultiplier = txtYawMultiplier;
-            this.txtPitchMultiplier = txtPitchMultiplier;
-            this.txtRollMultiplier = txtRollMultiplier;
-            this.btnCalibrate = btnCalibrate;
-            this.txtHTrawPosition = txtHTrawPosition;
-            this.txtHTrawAccel = txtHTrawAccel;
-            this.cbxMode = cbxMode;
-            this.dotPR = dotPR;
-            this.dotPY = dotPY;
+            _cnvPlot = cnvPlot;
+            _chkEnabled = chkEnabled;
+            _txtYawMultiplier = txtYawMultiplier;
+            _txtPitchMultiplier = txtPitchMultiplier;
+            _txtRollMultiplier = txtRollMultiplier;
+            _btnCalibrate = btnCalibrate;
+            _txtHTrawPosition = txtHTrawPosition;
+            _txtHTrawAccel = txtHTrawAccel;
+            _cbxMode = cbxMode;
+            _dotPr = dotPr;
+            _dotPy = dotPy;
+            _txtFilterAlpha = txtFilterAlpha;
 
-            HTcenteringHelper = new HeadtrackerCenteringHelper();
+            _hTcenteringHelper = new HeadtrackerCenteringHelper();
 
             chkEnabled.Checked += ChkEnabled_Checked;
             chkEnabled.Unchecked += ChkEnabled_Unchecked;
@@ -46,6 +52,7 @@ namespace NITHtester.Elements
             txtRollMultiplier.TextChanged += TxtRollMultiplier_TextChanged;
             btnCalibrate.Click += BtnCalibrate_Click;
             cbxMode.SelectionChanged += CbxMode_SelectionChanged;
+            txtFilterAlpha.TextChanged += TxtFilterAlpha_TextChanged;
 
             // Populate Mode ComboBox
             foreach (string item in Enum.GetNames(typeof(HTvisualizationModes)))
@@ -62,6 +69,15 @@ namespace NITHtester.Elements
             txtYawMultiplier.Text = YawMultiplier.ToString("F0");
             txtPitchMultiplier.Text = PitchMultiplier.ToString("F0");
             txtRollMultiplier.Text = RollMultiplier.ToString("F0");
+            txtFilterAlpha.Text = "100";
+        }
+
+        private void TxtFilterAlpha_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var alpha = Math.Clamp(float.Parse(_txtFilterAlpha.Text, CultureInfo.InvariantCulture) / 100, 0, 1f);
+            yawFilter = new DoubleFilterMAexpDecaying(alpha);
+            pitchFilter = new DoubleFilterMAexpDecaying(alpha);
+            rollFilter = new DoubleFilterMAexpDecaying(alpha);
         }
 
         public bool Enabled { get; private set; } = false;
@@ -72,9 +88,9 @@ namespace NITHtester.Elements
 
         public float YawMultiplier { get; private set; } = 1;
 
-        public void ReceiveAllNithValues(List<NithArgumentValue> args)
+        public void ReceiveAllNithValues(List<NithParameterValue> args)
         {
-            HTcenteringHelper.ParseAutomaticallyFromNithValues(args);
+            _hTcenteringHelper.ParseAutomaticallyFromNithValues(args);
         }
 
         public void UpdateGraphics()
@@ -86,56 +102,65 @@ namespace NITHtester.Elements
                 double roll = 0;
 
                 // Decide which are to plot based on visualization mode
-                switch (visualizationMode)
+                switch (_visualizationMode)
                 {
                     case HTvisualizationModes.Position:
-                        pitch = HTcenteringHelper.CenteredPosition.Pitch;
-                        yaw = HTcenteringHelper.CenteredPosition.Yaw;
-                        roll = HTcenteringHelper.CenteredPosition.Roll;
+                        pitch = _hTcenteringHelper.CenteredPosition.Pitch;
+                        yaw = _hTcenteringHelper.CenteredPosition.Yaw;
+                        roll = _hTcenteringHelper.CenteredPosition.Roll;
                         break;
 
                     case HTvisualizationModes.Acceleration:
-                        pitch = HTcenteringHelper.Acceleration.Pitch;
-                        yaw = HTcenteringHelper.Acceleration.Yaw;
-                        roll = HTcenteringHelper.Acceleration.Roll;
+                        pitch = _hTcenteringHelper.Acceleration.Pitch;
+                        yaw = _hTcenteringHelper.Acceleration.Yaw;
+                        roll = _hTcenteringHelper.Acceleration.Roll;
                         break;
                 }
 
-                double normalizedPitch = (cnvPlot.ActualHeight / 2) + (pitch / (DEFAULT_RADIUS * 2) * cnvPlot.ActualHeight * PitchMultiplier);
-                double normalizedYaw = (cnvPlot.ActualWidth / 2) + (yaw / (DEFAULT_RADIUS * 2) * cnvPlot.ActualWidth * YawMultiplier);
-                double normalizedRoll = (cnvPlot.ActualWidth / 2) + (roll / (DEFAULT_RADIUS * 2) * cnvPlot.ActualWidth * RollMultiplier);
+                // Filtering
+                yawFilter.Push(yaw);
+                yaw = yawFilter.Pull();
+                pitchFilter.Push(pitch);
+                pitch = pitchFilter.Pull();
+                rollFilter.Push(roll);
+                roll = rollFilter.Pull();
+
+                // Normalizing
+                double normalizedPitch = (_cnvPlot.ActualHeight / 2) + (pitch / (DefaultRadius * 2) * _cnvPlot.ActualHeight * PitchMultiplier);
+                double normalizedYaw = (_cnvPlot.ActualWidth / 2) + (yaw / (DefaultRadius * 2) * _cnvPlot.ActualWidth * YawMultiplier);
+                double normalizedRoll = (_cnvPlot.ActualWidth / 2) + (roll / (DefaultRadius * 2) * _cnvPlot.ActualWidth * RollMultiplier);
 
                 // Invert the Y axis because in WPF, the Y coordinate increases downwards
-                normalizedPitch = cnvPlot.Height - normalizedPitch;
+                normalizedPitch = _cnvPlot.Height - normalizedPitch;
 
                 // Set the position of the tracker dots
                 // Pitch + Yaw dot
-                Canvas.SetTop(dotPY, normalizedPitch - dotPY.ActualHeight / 2);
-                Canvas.SetLeft(dotPY, normalizedYaw - dotPY.ActualWidth / 2);
+                Canvas.SetTop(_dotPy, normalizedPitch - _dotPy.ActualHeight / 2);
+                Canvas.SetLeft(_dotPy, normalizedYaw - _dotPy.ActualWidth / 2);
                 // Pitch + Roll dot
-                Canvas.SetTop(dotPR, normalizedPitch - dotPR.ActualHeight / 2);
-                Canvas.SetLeft(dotPR, normalizedRoll - dotPR.ActualWidth / 2);
+                Canvas.SetTop(_dotPr, normalizedPitch - _dotPr.ActualHeight / 2);
+                Canvas.SetLeft(_dotPr, normalizedRoll - _dotPr.ActualWidth / 2);
 
                 // Fill the raw data TextBlocks
-                txtHTrawPosition.Text =
-                    "Y: " + HTcenteringHelper.CenteredPosition.Yaw.ToString("F2") + "\n" +
-                    "P: " + HTcenteringHelper.CenteredPosition.Pitch.ToString("F2") + "\n" +
-                    "R: " + HTcenteringHelper.CenteredPosition.Roll.ToString("F2");
-                txtHTrawAccel.Text =
-                    "Y: " + HTcenteringHelper.Acceleration.Yaw.ToString("F2") + "\n" +
-                    "P: " + HTcenteringHelper.Acceleration.Pitch.ToString("F2") + "\n" +
-                    "R: " + HTcenteringHelper.Acceleration.Roll.ToString("F2");
+                _txtHTrawPosition.Text =
+                    "Y: " + _hTcenteringHelper.CenteredPosition.Yaw.ToString("F2") + "\n" +
+                    "P: " + _hTcenteringHelper.CenteredPosition.Pitch.ToString("F2") + "\n" +
+                    "R: " + _hTcenteringHelper.CenteredPosition.Roll.ToString("F2");
+                _txtHTrawAccel.Text =
+                    "Y: " + _hTcenteringHelper.Acceleration.Yaw.ToString("F2") + "\n" +
+                    "P: " + _hTcenteringHelper.Acceleration.Pitch.ToString("F2") + "\n" +
+                    "R: " + _hTcenteringHelper.Acceleration.Roll.ToString("F2");
             }
         }
 
         private void BtnCalibrate_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            HTcenteringHelper.SetCenterToCurrentPosition();
+            _hTcenteringHelper.SetCenterToCurrentPosition();
         }
 
         private void CbxMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            visualizationMode = (HTvisualizationModes)Enum.Parse(typeof(HTvisualizationModes), cbxMode.SelectedItem.ToString());
+            _visualizationMode = (HTvisualizationModes)Enum.Parse(typeof(HTvisualizationModes), _cbxMode.SelectedItem.ToString());
         }
 
         private void ChkEnabled_Checked(object sender, System.Windows.RoutedEventArgs e)
@@ -173,8 +198,8 @@ namespace NITHtester.Elements
             };
 
             // Put them in the backgrounds
-            Canvas.SetZIndex(horizontalLine, -1);
-            Canvas.SetZIndex(verticalLine, -1);
+            Panel.SetZIndex(horizontalLine, -1);
+            Panel.SetZIndex(verticalLine, -1);
 
             // Add the lines to the canvas
             cnvPlot.Children.Add(horizontalLine);
@@ -185,11 +210,11 @@ namespace NITHtester.Elements
         {
             try
             {
-                PitchMultiplier = int.Parse(txtPitchMultiplier.Text, CultureInfo.InvariantCulture);
+                PitchMultiplier = int.Parse(_txtPitchMultiplier.Text, CultureInfo.InvariantCulture);
             }
             catch
             {
-                PitchMultiplier = DEFAULT_RADIUS;
+                PitchMultiplier = DefaultRadius;
             }
         }
 
@@ -197,11 +222,11 @@ namespace NITHtester.Elements
         {
             try
             {
-                RollMultiplier = int.Parse(txtRollMultiplier.Text, CultureInfo.InvariantCulture);
+                RollMultiplier = int.Parse(_txtRollMultiplier.Text, CultureInfo.InvariantCulture);
             }
             catch
             {
-                RollMultiplier = DEFAULT_RADIUS;
+                RollMultiplier = DefaultRadius;
             }
         }
 
@@ -209,11 +234,11 @@ namespace NITHtester.Elements
         {
             try
             {
-                YawMultiplier = int.Parse(txtYawMultiplier.Text, CultureInfo.InvariantCulture);
+                YawMultiplier = int.Parse(_txtYawMultiplier.Text, CultureInfo.InvariantCulture);
             }
             catch
             {
-                YawMultiplier = DEFAULT_RADIUS;
+                YawMultiplier = DefaultRadius;
             }
         }
     }

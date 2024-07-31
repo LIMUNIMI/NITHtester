@@ -5,7 +5,7 @@ using NITHtester.Modules;
 
 namespace NITHtester.Behaviors
 {
-    internal class ErrorHandler : AStandardNithErrorStringBehavior
+    internal class ErrorHandler : ANithErrorToStringBehavior
     {
         private string lastErrorString = "";
 
